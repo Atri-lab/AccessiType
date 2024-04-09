@@ -1,24 +1,27 @@
-//
-//  ContentView.swift
-//  AccessiType Watch App
-//
-//  Created by Atri Vyas on 2/10/24.
-//
-
 import SwiftUI
+import WatchKit
 
 struct ContentView: View {
+    @State private var crownRotation: Double = 0
+    @State private var message: String = ""
+
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+            Text(message)
+                .focusable(true)
+                .digitalCrownRotation($crownRotation, from: -Double.infinity, through: Double.infinity, by: 1, sensitivity: .low, isContinuous: false)
+                .onChange(of: crownRotation) { newValue in
+                    if newValue > 0 {
+                        message = "U"
+                    } else if newValue < 0 {
+                        message = "D"
+                    }
+                    crownRotation = 0 // Reset the crown rotation value
+                }
 
-#Preview {
-    ContentView()
+            Button("Select") {
+                message = "X"
+            }
+        }
+    }
 }

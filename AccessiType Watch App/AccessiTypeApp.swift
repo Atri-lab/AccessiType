@@ -8,10 +8,13 @@
 import SwiftUI
 
 @main
-struct AccessiType_Watch_AppApp: App {
+struct AccessiTypeApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView {
+                ContentView()
+            }
         }
     }
 }
+
